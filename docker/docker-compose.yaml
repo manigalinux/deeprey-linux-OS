@@ -1,0 +1,15 @@
+services:
+  deeprey-linux-os:
+    hostname: deeprey-linux-os
+    container_name: deeprey-linux-os
+    image: deeprey-linux-os
+    restart: unless-stopped
+    build:
+      context: dockerfiles/
+      dockerfile: Dockerfile
+    tty: true
+    privileged: true # using loop devices
+    volumes:
+      - ../build/:/build
+      - ../scripts:/scripts
+
