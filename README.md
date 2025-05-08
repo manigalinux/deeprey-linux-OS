@@ -1,5 +1,5 @@
 # deeprey-linux-os
-Deepry linux OS include environment (docker) and scripts for build Debian OS, with minimal GUI (Xorg) environment using for running OpenCPN as kiosk application.
+Deeprey linux OS include environment (docker) and scripts for build Debian OS, with minimal GUI (Xorg) environment using for running OpenCPN as kiosk application.
 
 ## Environment
 Scripts are written and tested on Debian 12 (bookworm) OS. If you use different version of Debian or other GNU/Linux distribution then scripts should be running inside virtual docker container.
@@ -8,7 +8,7 @@ Scripts are written and tested on Debian 12 (bookworm) OS. If you use different 
 For running script inisde Debian 12, you need to install additional packages, which are included in next command
 
 ```
-apt-get install -y sed debootstrap
+apt-get install -y sed debootstrap fdisk parted syslinux dosfstools uuid-runtime extlinux syslinux-efi 
 ```
 ### Build inside docker-compose environment
 Your GNU/Linux distribution must have installed `bash` and `docker-compose` application.
@@ -25,7 +25,7 @@ For buildig image change folder to `scripts` and then run `./build.sh`
 
 ```
 cd scripts
-./build.sh
+sudo ./build.sh
 ```
 
 If you use docker envirnoment then you run:
