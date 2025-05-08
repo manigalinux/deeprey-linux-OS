@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# setup path where will be rootfs
+ROOTFS="../build/rootfs"
+# setup path where will be images
+IMAGES="../build/images"
