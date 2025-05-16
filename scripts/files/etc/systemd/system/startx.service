@@ -1,3 +1,6 @@
+# this systemd service automatically star xserver at start
+# before run xserver, check if at least one graphic card exist (kernel module is loaded)
+
 [Unit]
 Description=X11 session for janez
 After=graphical.target systemd-user-sessions.service
@@ -17,7 +20,9 @@ UtmpMode=user
 
 StandardOutput=journal
 ExecStartPre=/usr/bin/chvt 8
-ExecStart=/usr/bin/startx -- vt8 -keeptty -verbose 3 -logfile /dev/null
+ExecStartPre=/bin/bash -c "while true; do [ -e /dev/dri/card0 ] && exit 0; sleep 0.2; done" 
+#ExecStart=/usr/bin/startx -- vt8 -keeptty -verbose 3 -logfile /dev/null
+ExecStart=/usr/bin/startx -- vt8 -keeptty -verbose 3 -logfile /tmp/xorg.log
 #Restart=no
 Restart=always
 RestartSec=3
