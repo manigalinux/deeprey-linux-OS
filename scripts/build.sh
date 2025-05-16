@@ -52,17 +52,23 @@ LOG_INFO "Updating guest repositories"
 sed -i 's/main$/main contrib non-free-firmware/g' ${ROOTFS}/etc/apt/sources.list # bookworm (firmware for i915 and iwlwifi drivers)
 echo 'deb http://deb.debian.org/debian bookworm-backports main' >> ${ROOTFS}/etc/apt/sources.list # repository for official opencpn application
 
-# added default user
-LOG_INFO "Added default user"
-chroot ${ROOTFS} useradd -m -s /bin/bash -p '$y$j9T$omjeV.F9RBuRT6uiB8N8L0$zPqVN0qa3Hz/fAvqK0k8.oA4BqDmg2zOXjfvO2TFPN5' janez
+# disable root password
+sed -i 's|^root:[^:]*:|root::|' ${ROOTFS}/etc/shadow
 
-# add development stuff - just for development (pass: x)
-LOG_INFO "Added development stuff (user, ssh, sudo etc.)"
-chroot ${ROOTFS} useradd -m -s /bin/bash -p '$y$j9T$omjeV.F9RBuRT6uiB8N8L0$zPqVN0qa3Hz/fAvqK0k8.oA4BqDmg2zOXjfvO2TFPN5' development # add user with password x
+# add default user
+LOG_INFO "Add default user: opencpn"
+passhash=$(openssl passwd -6 -salt "$(openssl rand -base64 32)" "$(openssl rand -base64 32)") # random password
+chroot ${ROOTFS} useradd -m -s /bin/bash -p "${passhash}" opencpn
+chroot ${ROOTFS} usermod -a -G netdev,tty,dialout opencpn
+
+# add admin user
+LOG_INFO "Add admin user: deepreyadmin"
+passhash=$(openssl passwd -6 -salt "$(openssl rand -base64 32)" "${ADMIN_PASSWORD}") # random password
+chroot ${ROOTFS} useradd -m -s /bin/bash -p "${passhash}" deepreyadmin
+
+# add admin related tools and 
 chroot ${ROOTFS} apt-get install -y sudo openssh-server # added sudo, openssh
-chroot ${ROOTFS} apt-get install -y x11-apps mesa-utils # add xclock, 
-chroot ${ROOTFS} usermod -a -G sudo development # add development user to sudo group
-chroot ${ROOTFS} usermod -a -G sudo janez # add default user to sudo group
+chroot ${ROOTFS} usermod -a -G sudo deepreyadmin
 
 # install host packages
 LOG_INFO "Install additional packages (like xserver, kernel, firmware, network manager etc.)"
@@ -82,8 +88,8 @@ chroot ${ROOTFS} apt-get install -y opencpn
 LOG_INFO "Copy custom configuration files"
 cp -ar files ${ROOTFS} 
 chown -R root:root ${ROOTFS}/files
-chown -R 1000:1000 ${ROOTFS}/files/home/janez
-chown -R 1001:1001 ${ROOTFS}/files/home/development
+chown -R 1000:1000 ${ROOTFS}/files/home/opencpn
+chown -R 1001:1001 ${ROOTFS}/files/home/deepreyadmin
 cp -arp ${ROOTFS}/files/* ${ROOTFS}/
 rm -rf ${ROOTFS}/files
 
@@ -102,7 +108,15 @@ echo "127.0.1.1 deeprey-linux-os" >> ${ROOTFS}/etc/hosts
 # enable services
 LOG_INFO "Enable systemd services"
 chroot ${ROOTFS} systemctl enable startx.service
-# chroot ${ROOTFS} systemctl enable sshvpn.service
+chroot ${ROOTFS} systemctl enable sshh.service
+#chroot ${ROOTFS} systemctl enable sshvpn.service
+
+LOG_INFO "Remove unused tty"
+for tty in {2..12}; do
+    mkdir -p "${ROOTFS}/etc/systemd/system/getty@tty$tty.service.d"
+    echo -e "[Service]\nExecStart=\nExecStart=-/bin/false" > "${ROOTFS}/etc/systemd/system/getty@tty$tty.service.d/override.conf"
+    chroot ${ROOTFS} systemctl mask getty@tty$tty.service
+done
 
 # clean downloaded packages
 LOG_INFO "Clean downloaded apt packages"
@@ -182,19 +196,13 @@ mkdir -p /mnt/syslinux /mnt/EFI/boot/
 cp /usr/lib/syslinux/modules/bios/* /mnt/syslinux/
 extlinux --install /mnt/syslinux
 # set boot configuration
-#echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=off loglevel=0 quiet rw pci=nomsi\n" > /mnt/syslinux/syslinux.cfg
-#echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=off loglevel=7 quiet rw pci=noaer\n" > /mnt/syslinux/syslinux.cfg #v13
-#echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} loglevel=7 quiet rw pci=noaer\n" > /mnt/syslinux/syslinux.cfg #v12
-echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=on loglevel=7 quiet rw pci=noaer noatime nodirtime console=ttyS0\n" > /mnt/syslinux/syslinux.cfg #v14
+echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=on loglevel=0 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
 
 # create EFI boot (syslinux)
 LOG_INFO "Create EFI boot (syslinux)"
 cp /usr/lib/SYSLINUX.EFI/efi64/syslinux.efi /mnt/EFI/boot/bootx64.efi
 cp /usr/lib/syslinux/modules/efi64/* /mnt/EFI/boot/
 cp /mnt/syslinux/syslinux.cfg /mnt/EFI/boot/syslinux.cfg
-#echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=off loglevel=7 quiet rw pci=noaer\n" > /mnt/EFI/boot/syslinux.cfg # v13
-#echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} loglevel=7 quiet rw pci=noaer\n" > /mnt/EFI/boot/syslinux.cfg #v12
-#echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=on loglevel=7 quiet rw pci=noaer noatime nodirtime console=ttyS0\n" > /mnt/EFI/boot/syslinux.cfg # v14
 
 LOG_INFO "Copy linux kernel and initramfs into EFI partition"
 mkdir /mnt/linux

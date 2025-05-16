@@ -2,11 +2,11 @@
 # before run xserver, check if at least one graphic card exist (kernel module is loaded)
 
 [Unit]
-Description=X11 session for janez
+Description=X11 session for opencpn
 After=graphical.target systemd-user-sessions.service
 
 [Service]
-User=janez
+User=opencpn
 WorkingDirectory=~
 
 PAMName=login

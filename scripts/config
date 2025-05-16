@@ -4,3 +4,5 @@
 ROOTFS="../build/rootfs"
 # setup path where will be images
 IMAGES="../build/images"
+# setup admin password to access to board
+ADMIN_PASSWORD="PlOSi1YESuoOMlTju5DzasunbRnvb6wvXhSXy3faVVDOTdljsQbgthwHbbV7oPAv"
