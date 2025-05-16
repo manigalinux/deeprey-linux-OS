@@ -6,7 +6,7 @@ ENV TZ "Europe/Ljubljana"
 RUN apt-get update            
 
 # install required packages
-RUN apt-get -y install debootstrap fdisk parted syslinux dosfstools uuid-runtime extlinux syslinux-efi 
+RUN apt-get -y install debootstrap fdisk parted syslinux dosfstools uuid-runtime extlinux syslinux-efi xz-utils
 
 # install usefull packages
 RUN apt-get -y install nano
