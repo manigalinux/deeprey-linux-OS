@@ -59,7 +59,7 @@ sed -i 's|^root:[^:]*:|root::|' ${ROOTFS}/etc/shadow
 LOG_INFO "Add default user: opencpn"
 passhash=$(openssl passwd -6 -salt "$(openssl rand -base64 32)" "$(openssl rand -base64 32)") # random password
 chroot ${ROOTFS} useradd -m -s /bin/bash -p "${passhash}" opencpn
-chroot ${ROOTFS} usermod -a -G netdev,tty,dialout opencpn
+chroot ${ROOTFS} usermod -a -G netdev,tty,dialout,input,audio,video,plugdev opencpn
 
 # add admin user
 LOG_INFO "Add admin user: deepreyadmin"
@@ -78,6 +78,7 @@ chroot ${ROOTFS} apt-get install -y xserver-xorg-video-intel xserver-xorg-core x
 chroot ${ROOTFS} apt-get install -y network-manager # install network manager
 chroot ${ROOTFS} apt-get install -y openbox kbd # install openbox kbd
 chroot ${ROOTFS} apt-get install -y mesa-utils x11-apps # install mesa, xclock, xset
+chroot ${ROOTFS} apt-get install -y busybox iptables iptables-persistent # install busybox and iptables
 
 # install official opencpn
 LOG_INFO "Install opencpn"
@@ -108,7 +109,7 @@ echo "127.0.1.1 deeprey-linux-os" >> ${ROOTFS}/etc/hosts
 # enable services
 LOG_INFO "Enable systemd services"
 chroot ${ROOTFS} systemctl enable startx.service
-chroot ${ROOTFS} systemctl enable sshh.service
+chroot ${ROOTFS} systemctl enable sshd.service
 #chroot ${ROOTFS} systemctl enable sshvpn.service
 
 LOG_INFO "Remove unused tty"
@@ -130,6 +131,10 @@ chroot ${ROOTFS} apt-get clean
 LOG_INFO "Create empty block file"
 dd if=/dev/zero of=${IMAGES}/image.img bs=1M count=${IMAGE_SIZE} &>> /dev/null
 chmod 666 ${IMAGES}/image.img # change permission
+
+# create squashfs
+#mksquashfs ${ROOTFS} ${IMAGES}/rootfs.sqsh
+#mount -t overlay overlay -o lowerdir=/etc,upperdir=/mnt/data/etc,workdir=/mnt/data/.etc-work 
 
 # create loopback device
 LOG_INFO "Create loopback device"
@@ -196,7 +201,7 @@ mkdir -p /mnt/syslinux /mnt/EFI/boot/
 cp /usr/lib/syslinux/modules/bios/* /mnt/syslinux/
 extlinux --install /mnt/syslinux
 # set boot configuration
-echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=on loglevel=0 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
+echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=on loglevel=7 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
 
 # create EFI boot (syslinux)
 LOG_INFO "Create EFI boot (syslinux)"
