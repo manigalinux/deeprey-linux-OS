@@ -47,10 +47,9 @@ local_mount_root()
 	# Mount a tmpfs for the overlay in /upper
 	#mount -t tmpfs tmpfs /upper
 	#mkdir /upper/data /upper/work
-	mkdir /storage/data /storage/work
+	mkdir /storage/data /storage/work &> /dev/null
 
 	# Mount the final overlay-root in $rootmnt
-	echo "Rootfsdev ${ROOT}" 1>&2
 	#mount -t overlay -olowerdir=/lower,upperdir=/upper/data,workdir=/upper/work overlay ${rootmnt}
 	mount -t overlay -olowerdir=/lower,upperdir=/storage/data,workdir=/storage/work overlay ${rootmnt}
 }

@@ -203,7 +203,7 @@ cp /usr/lib/syslinux/modules/bios/* /mnt/syslinux/
 extlinux --install /mnt/syslinux
 # set boot configuration
 #echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=on loglevel=7 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
-echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} boot=overlay acpi=on loglevel=7 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
+echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} boot=overlay acpi=on loglevel=0 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
 
 # create EFI boot (syslinux)
 LOG_INFO "Create EFI boot (syslinux)"
