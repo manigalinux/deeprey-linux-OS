@@ -133,7 +133,8 @@ dd if=/dev/zero of=${IMAGES}/image.img bs=1M count=${IMAGE_SIZE} &>> /dev/null
 chmod 666 ${IMAGES}/image.img # change permission
 
 # create squashfs
-#mksquashfs ${ROOTFS} ${IMAGES}/rootfs.sqsh
+rm ${IMAGES}/rootfs.squashfs
+mksquashfs ${ROOTFS} ${IMAGES}/rootfs.squashfs
 #mount -t overlay overlay -o lowerdir=/etc,upperdir=/mnt/data/etc,workdir=/mnt/data/.etc-work 
 
 # create loopback device
@@ -201,7 +202,8 @@ mkdir -p /mnt/syslinux /mnt/EFI/boot/
 cp /usr/lib/syslinux/modules/bios/* /mnt/syslinux/
 extlinux --install /mnt/syslinux
 # set boot configuration
-echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=on loglevel=7 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
+#echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} acpi=on loglevel=7 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
+echo -e "DEFAULT boot\nTIMEOUT 0\n\nLABEL boot\n\tLINUX /linux/vmlinuz\n\tINITRD /linux/initrd.img\n\tAPPEND root=UUID=${rootfsuuid} boot=overlay acpi=on loglevel=7 quiet rw pci=noaer noatime nodirtime console=tty1 vconsole.keymap=us no_console_suspend\n" > /mnt/syslinux/syslinux.cfg
 
 # create EFI boot (syslinux)
 LOG_INFO "Create EFI boot (syslinux)"
@@ -220,7 +222,8 @@ umount /mnt
 # mount and copy data
 LOG_INFO "Mount and copy data to rootfs partition"
 mount ${loopback}p2 /mnt/
-cp -arp ${ROOTFS}/* /mnt/
+#cp -arp ${ROOTFS}/* /mnt/
+cp -arp ${IMAGES}/rootfs.squashfs /mnt/
 umount /mnt
 
 # destroy loopback
