@@ -1,0 +1,8 @@
+# content in this script will be autostarted when openbox (gui) will be started
+# disable blank display -  display is everytime on
+xset -dpms 
+xset s off
+xset s noblank
+
+# run opencpn in while loop - if someone close application app will start back
+/bin/bash -c 'while true; do opencpn -f; done' &
