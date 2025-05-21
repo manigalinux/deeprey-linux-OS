@@ -73,7 +73,7 @@ As was mentioned before the whole `scripts/files` will be directly copied to roo
 cat id_rsa.pub >> scripts/files/home/deepreyadmin/.ssh/authorized_keys
 ```
 
-After build `authorized_keys` file will be on your image and you can access to device via SSH With certificate over 2345.
+After build `authorized_keys` file will be on your image and you can access to device via SSH With certificate over port 2345.
 
 ## Changing SSH connection port
 For changing SSH connection port please change Port number 2345 to your number in file [scripts/files/etc/ssh/sshd_config](scripts/files/etc/ssh/sshd_config) (line 14).
