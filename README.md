@@ -1,6 +1,9 @@
 # deeprey-linux-os
 Deeprey linux OS include environment (docker) and scripts for build Debian OS with minimal GUI (Xorg) environment used for running OpenCPN as kiosk application. Hardware connected with this software are: [maxtang EHL-35](docs/EHL-35.pdf) motherboard with intel CPU and [G121EAN01.2](docs/G121EAN01.2.pdf) 12.1 Inch Color TFT-LCD LVDS display panel.
 
+## Configuration
+User configuration is in [scripts/config](scripts/config) file. There are constants as paths where will be stored image and rootfs, and also default admin password.
+
 ## Environment
 Scripts are written and tested on Debian 12 (bookworm) OS. If you use different version of Debian or other GNU/Linux distribution then scripts should be running inside virtual docker container.
 
@@ -28,9 +31,6 @@ cd scripts
 sudo ./build.sh
 ```
 
-## Configuration
-User configuration is in [scripts/config](scripts/config) file. There are constants as paths where will be stored image and rootfs, and also default admin password.
-
 ## Copy image to storage
 Default location of builded image is in `build/images/image.img` you can copy to storage device as `sudo dd if=build/images/image.img of=/dev/sdX bs=1M oflag=direct status=progress`
 
@@ -51,9 +51,6 @@ Script `./build.sh` at first check, if host is debian bookworm (12) and if user 
 After that create guest rootfs with debootstrap (default path `build/rootfs` - you can change in `scripts/config`) where install all base packages from debian repository. Then create users `opencpn` with random password and `deepreyadmin` with password from `scripts/config` configuration. 
 
 A lot of system configuration will be copied from `script/files` folder. Those files are directly copied, contents are not changed, script change just owner of files to "root:root", except files in `/home` folder (where are user files conected with non root owner). Files in `script/files` are connected with autostart graphic interface, modules, xserver, sshd configuration and so on.
-
-
-
 
 [Workaround for flickering issue](#known-hwsw-related-issues) are in `linux-ubuntu-5.15.0-67-generic.tar.xz` file, where are Ubuntu 20.04.6 kernel (5.15.0-67-generic) and modules. This file is unpacked directly to rootfs folder. After that script rebuild initramfs.
 
