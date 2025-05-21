@@ -34,7 +34,8 @@ sudo ./build.sh
 ## Copy image to storage
 Default location of builded image is in `build/images/image.img` you can copy to storage device as `sudo dd if=build/images/image.img of=/dev/sdX bs=1M oflag=direct status=progress`
 
-## Known HW/SW related issues
+## Hacking
+### Known HW/SW related issues
 
 Default graphic kernel driver i915 has a bug in combination of device screen - filickering image (bookworm debian kernel version 6.1). This should be related with [this bug](https://gitlab.freedesktop.org/drm/i915/kernel/-/issues/8146), but fix from page doesn't work. Patch was also sended to i915 [developer team](https://patchwork.freedesktop.org/patch/552713/) but it was reverted.
 
@@ -44,7 +45,7 @@ The main simptom of issue is if picture on display is static then start flickeri
 
 Workaround is using older kernel - before 6.0. In this case we used ubuntu kernel 5.15.0-67-generic. But solution is not 100% because display start flickering when display goes from sleep state.
 
-## Background of [./build.sh](scripts/build.sh) script
+### Background of [./build.sh](scripts/build.sh) script
 
 Script `./build.sh` at first check, if host is debian bookworm (12) and if user which runs script is root.
 
