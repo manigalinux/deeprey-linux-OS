@@ -4,23 +4,23 @@ Deeprey linux OS include environment (docker) and scripts for build Debian OS wi
 ## Environment
 Scripts are written and tested on Debian 12 (bookworm) OS. If you use different version of Debian or other GNU/Linux distribution then scripts should be running inside virtual docker container.
 
-### Build inside Debian 12 (bookworm)
-For running script inisde Debian 12, you need to install additional packages, which are included in next command
-
-```
-apt-get install -y sed debootstrap fdisk parted syslinux dosfstools uuid-runtime extlinux syslinux-efi 
-```
-### Build inside docker-compose environment
+### Option 1: docker-compose environment
 Your GNU/Linux distribution must have installed `bash` and `docker-compose` application.
 
 Wrappers for using docker environment are in `docker` folder.
 
 To start docker environment use command `docker-compose up`
 
-## Configuration
-User configuration is in `scripts/config` file. There you can reconfigure folder paths (where will be images, rootfs and so on)
+and enter to docker environment `docker exec -it deeprey-linux-os /bin/bash`
 
-## Build
+### Option 2: use Debian 12 (bookworm) environment
+For running script inisde Debian 12, you need to install additional packages, which are included in next command
+
+```
+apt-get install -y debootstrap fdisk parted syslinux dosfstools uuid-runtime extlinux syslinux-efi xz-utils squashfs-tools 
+```
+
+### Build
 For buildig image change folder to `scripts` and then run `./build.sh`
 
 ```
@@ -28,12 +28,8 @@ cd scripts
 sudo ./build.sh
 ```
 
-If you use docker envirnoment then you run:
-```
-cd scripts
-./build.sh
-```
-And be sure that docker container is running `docker-compose up`
+## Configuration
+User configuration is in [scripts/config](scripts/config) file. There are constants as paths where will be stored image and rootfs, and also default admin password.
 
 ## Copy image to storage
 Default location of builded image is in `build/images/image.img` you can copy to storage device as `sudo dd if=build/images/image.img of=/dev/sdX bs=1M oflag=direct status=progress`
@@ -52,7 +48,12 @@ Workaround is using older kernel - before 6.0. In this case we used ubuntu kerne
 
 Script `./build.sh` at first check, if host is debian bookworm (12) and if user which runs script is root.
 
-After that create guest rootfs with debootstrap (default path `build/rootfs` - you can change in `scripts/config`) where install all packages from debian repository  and copy user files from `script/files` folder. Those files are directly copied, content is not changed, script change just owner of files to "root:root", except files in `/home` folder (where are user files conected with non root owner). Those files are connected with autostart graphic interface, modules and xserver configuration.
+After that create guest rootfs with debootstrap (default path `build/rootfs` - you can change in `scripts/config`) where install all base packages from debian repository. Then create users `opencpn` with random password and `deepreyadmin` with password from `scripts/config` configuration. 
+
+A lot of system configuration will be copied from `script/files` folder. Those files are directly copied, contents are not changed, script change just owner of files to "root:root", except files in `/home` folder (where are user files conected with non root owner). Files in `script/files` are connected with autostart graphic interface, modules, xserver, sshd configuration and so on.
+
+
+
 
 [Workaround for flickering issue](#known-hwsw-related-issues) are in `linux-ubuntu-5.15.0-67-generic.tar.xz` file, where are Ubuntu 20.04.6 kernel (5.15.0-67-generic) and modules. This file is unpacked directly to rootfs folder. After that script rebuild initramfs.
 
@@ -60,4 +61,4 @@ For building image script create empty file and create block device (virtual dis
 
 Linux kernel and initramfs are copied from rootfs into EFI partition in `linux` folder.
 
-In the end script copy all content of rootfs folder to 2nd partition.
+In the end script create squashfs and copy it to to 2nd partition.
