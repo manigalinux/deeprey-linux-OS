@@ -117,16 +117,13 @@ cp -ar files ${ROOTFS}
 chown -R root:root ${ROOTFS}/files
 chown -R 1000:1000 ${ROOTFS}/files/home/opencpn
 
-TARGET_USER=$(logname)
-TARGET_HOME=$(eval echo "~$TARGET_USER")
+cp -arp ${ROOTFS}/tmp/.local ${ROOTFS}/files/home/opencpn/.local
+cp -arp ${ROOTFS}/tmp/.opencpn ${ROOTFS}/files/home/opencpn/.opencpn
 
-cp -arp ${ROOTFS}/${TARGET_HOME}/.local ${ROOTFS}/files/home/opencpn/.local
-cp -arp ${ROOTFS}/${TARGET_HOME}/.opencpn ${ROOTFS}/files/home/opencpn/.opencpn
+rm -rf ${ROOTFS}/tmp
 
-rm -rf ${ROOTFS}/${TARGET_HOME}
-
-chown -R 1000:10000 ${ROOTFS}/files/home/opencpn/.local
-chown -R 1000:10000 ${ROOTFS}/files/home/opencpn/.opencpn
+chown -R 1000:1000 ${ROOTFS}/files/home/opencpn/.local
+chown -R 1000:1000 ${ROOTFS}/files/home/opencpn/.opencpn
 
 chown -R 1001:1001 ${ROOTFS}/files/home/deepreyadmin
 cp -arp ${ROOTFS}/files/* ${ROOTFS}/
