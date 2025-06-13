@@ -5,4 +5,5 @@ xset s off
 xset s noblank
 
 # run opencpn in while loop - if someone close application app will start back
-/bin/bash -c 'while true; do opencpn -f; done' &
+#/bin/bash -c 'while true; do opencpn -f; done' &
+/usr/local/bin/start-opencpn-kiosk.sh &

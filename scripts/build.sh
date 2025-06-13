@@ -79,10 +79,36 @@ chroot ${ROOTFS} apt-get install -y network-manager # install network manager
 chroot ${ROOTFS} apt-get install -y openbox kbd # install openbox kbd
 chroot ${ROOTFS} apt-get install -y mesa-utils x11-apps # install mesa, xclock, xset
 chroot ${ROOTFS} apt-get install -y busybox iptables iptables-persistent # install busybox and iptables
+chroot ${ROOTFS} apt-get install -y acpid # acpid - catch power buttons pressed
 
 # install official opencpn
 LOG_INFO "Install opencpn"
-chroot ${ROOTFS} apt-get install -y opencpn
+cp -arp Deeprey*.deb ${ROOTFS}/
+cp -arp custom_opencpn.deb ${ROOTFS}/
+#chroot ${ROOTFS} apt-get install -y libglew2.2 libwxgtk-gl3.2-1 libarchive13 libcurl4 libglu1
+chroot ${ROOTFS} dpkg -i custom_opencpn.deb
+chroot ${ROOTFS} apt-get -y --fix-broken install
+
+## install original
+## chroot ${ROOTFS} apt-get install -y opencpn
+
+
+##  LOG_INFO "Compile opencpn"
+##  apt-get install -y devscripts equivs cmake libgl1-mesa-dev libgl1-mesa-glx libglew-dev  libwxgtk-media3.2-dev libbz2-dev zlib1g-dev  libarchive-dev libpango1.0-dev libcurl4-openssl-dev libusb-1.0-0-dev libssl-dev liblzma-dev libelf-dev libxrandr-dev libgtk-3-dev
+##  git clone --depth 1 --branch Release_5.10.2 https://github.com/OpenCPN/OpenCPN.git /OpenCPN
+##  #apt-get --allow-unauthenticated install -f
+##  mkdir -p /OpenCPN/build
+##  #(cd /OpenCPN/build; cmake  -DCMAKE_INSTALL_PREFIX=/opencpn/usr/ ..; make; make install)
+##  (cd /OpenCPN/build; cmake ..; make; make DESTDIR=/opencpn/ install)
+##  
+##  mkdir /opencpn /opencpn/DEBIAN
+##  echo -e "Package: opencpn\nVersion: 5.10.2\nDepends: libc6,libglew2.2,libwxgtk-gl3.2-1,libarchive13,libcurl4,libglu1\nMaintainer: Deeprey\nArchitecture: amd64\nDescription: Opencpn application" > /opencpn/DEBIAN/control
+##  dpkg-deb --build /opencpn
+##  cp /opencpn.deb ${ROOTFS}
+##  
+##  # install dependencies and opencpn
+##  chroot ${ROOTFS} apt-get install -y libglew2.2 libwxgtk-gl3.2-1 libarchive13 libcurl4 libglu1
+##  chroot ${ROOTFS} dpkg -i opencpn.deb 
 
 # copy custom configuration from folder "files" (startup scripts, driver parameters)
 # files are copied into temporary folder then change owner and groups then copied to rootfs
@@ -110,6 +136,7 @@ echo "127.0.1.1 deeprey-linux-os" >> ${ROOTFS}/etc/hosts
 LOG_INFO "Enable systemd services"
 chroot ${ROOTFS} systemctl enable startx.service
 chroot ${ROOTFS} systemctl enable sshd.service
+chroot ${ROOTFS} systemctl enable setup-can0.service
 #chroot ${ROOTFS} systemctl enable sshvpn.service
 
 LOG_INFO "Remove unused tty"
