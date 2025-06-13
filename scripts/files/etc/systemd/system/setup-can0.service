@@ -1,0 +1,13 @@
+[Unit]
+Description=Auto-setup for internal CAN0 (gs_usb)
+BindsTo=sys-subsystem-net-devices-can0.device
+After=sys-subsystem-net-devices-can0.device
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/sbin/ip link set can0 type can bitrate 250000 restart-ms 100
+ExecStart=/sbin/ip link set can0 up
+
+[Install]
+WantedBy=sys-subsystem-net-devices-can0.device
