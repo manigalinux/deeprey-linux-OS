@@ -1,0 +1,6 @@
+[ ] Auto generate [[deeprey;gui].dirs](debian_pkg/deeprey_gui_pkg/tmp/.opencpn/plugins/install_data/[deeprey;gui].dirs)
+[ ] Auto generate [[deeprey;gui].files](debian_pkg/deeprey_gui_pkg/tmp/.opencpn/plugins/install_data/[deeprey;gui].files)
+[ ] Auto generate [[deeprey;gui].version](debian_pkg/deeprey_gui_pkg/tmp/.opencpn/plugins/install_data/[deeprey;gui].version)
+[ ] Auto generate [[deeprey-radar].dirs](debian_pkg/deeprey_gui_pkg/tmp/.opencpn/plugins/install_data/[deeprey-radar].dirs)
+[ ] Auto generate [[deeprey-radar].files](debian_pkg/deeprey_gui_pkg/tmp/.opencpn/plugins/install_data/[deeprey-radar].files)
+[ ] Auto generate [[deeprey-radar].version](debian_pkg/deeprey_gui_pkg/tmp/.opencpn/plugins/install_data/[deeprey-radar].version)

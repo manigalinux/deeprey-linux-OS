@@ -1,0 +1,34 @@
+# syntax=docker/dockerfile:1       
+FROM debian:12
+
+ENV DEBIAN_FRONTEND "noninteractive"
+ENV TZ "Europe/Ljubljana"
+RUN apt-get update
+
+# install required packages
+RUN apt-get -y install debootstrap fdisk parted syslinux dosfstools uuid-runtime extlinux syslinux-efi xz-utils squashfs-tools
+
+# install usefull packages
+RUN apt-get -y install nano cmake git sudo wget curl ca-certificates build-essential
+
+# install opencpn required packages
+RUN apt-get --allow-unauthenticated install -f
+RUN apt-get install -y --no-install-recommends libglew-dev libarchive-dev libudev-dev libcurl4-openssl-dev libelf-dev libusb-1.0-0-dev
+RUN apt-get install -y --no-install-recommends devscripts equivs
+
+# install deeprey-gui dependencies
+RUN apt-get install -y --no-install-recommends software-properties-common
+
+# set environment variables
+ENV DEEPREY_GUI_DIR /deeprey-gui
+ENV DEEPREY_RADAR_DIR /deeprey-radar
+ENV DEEPREY_LINUX_OS_DIR /deeprey-linux-os
+ENV OPENCPN_DIR /OpenCPN
+ENV DEBIAN_PKG_DIR $DEEPREY_LINUX_OS_DIR/debian_pkg
+
+# Configuring git safe directories
+RUN git config --global --add safe.directory $DEEPREY_GUI_DIR
+RUN git config --global --add safe.directory $DEEPREY_RADAR_DIR
+RUN git config --global --add safe.directory $DEEPREY_LINUX_OS_DIR
+RUN git config --global --add safe.directory $OPENCPN_DIR
+

@@ -12,7 +12,7 @@ Your GNU/Linux distribution must have installed `bash` and `docker-compose` appl
 
 Wrappers for using docker environment are in `docker` folder.
 
-To start docker environment use command `docker-compose up`
+To start docker environment use command `docker-compose up -d deeprey-linux-os`
 
 and enter to docker environment `docker exec -it deeprey-linux-os /bin/bash`
 

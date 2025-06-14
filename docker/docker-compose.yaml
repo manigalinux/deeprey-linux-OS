@@ -12,4 +12,28 @@ services:
     volumes:
       - ../build/:/build
       - ../scripts:/scripts
+  deeprey-dev-os:
+    hostname: deeprey-dev-os
+    container_name: deeprey-dev-os
+    image: deeprey-dev-os
+    restart: unless-stopped
+    build:
+      context: dockerfiles/
+      dockerfile: Dockerfile.dev
+    tty: true
+    privileged: true
+    volumes:
+      - ../../deeprey-gui:/deeprey-gui
+      - ../../deeprey-radar:/deeprey-radar
+      - ./..:/deeprey-linux-os
+      - ../../OpenCPN:/OpenCPN
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - /etc/machine-id:/etc/machine-id:ro
+    environment:
+      - DISPLAY=${DISPLAY}
+      - OPENCPN_SRC_DIR=/OpenCPN
+      - DEEPREY_GUI_SRC_DIR=/deeprey-gui
+    devices:
+      - /dev/dri
+    stdin_open: true
 

@@ -1,2 +1,11 @@
 build/*
 !build/.keep
+
+# OpenCPN package files
+**/deeprey_pkg/usr/**
+**/deeprey_pkg/tmp/.local/**
+DeepreyGui_pi_*_amd64.deb
+DeepreyPlugins_pi_*_amd64.deb
+custom_opencpn.deb
+build_release/
+**/logs/**

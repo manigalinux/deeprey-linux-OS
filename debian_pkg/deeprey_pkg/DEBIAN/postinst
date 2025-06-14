@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Determine the username of the user who invoked sudo
+echo "Copying configuration files to $HOME..."
+
+# Copy the contents of /tmp (which will be in /tmp because of your package layout)
+cp -r /tmp/.local "$HOME/"
+cp -r /tmp/.opencpn "$HOME/"
+
+# Change ownership to the target user
+chown -R "$USER":"$USER" "$HOME/.local"
+chown -R "$USER":"$USER" "$HOME/.opencpn"
+
+echo "Configuration files have been copied!"
