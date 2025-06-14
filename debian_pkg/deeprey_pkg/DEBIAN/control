@@ -1,0 +1,8 @@
+Package: OpenCPN-DeepreyGUI
+Version: 5.11.2
+Architecture: amd64
+Essential: no
+Priority: optional
+Depends: libglew2.2, libxrandr2, libwxgtk3.2-dev, libwxgtk-webview3.2-dev, libshp2, libtinyxml2.6.2v5, libarchive13, libcurl4, libportaudio2
+Maintainer: Deeprey
+Description: OpenCPN version with DeepreyGUI Plugin
