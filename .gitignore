@@ -8,4 +8,5 @@ DeepreyGui_pi_*_amd64.deb
 DeepreyPlugins_pi_*_amd64.deb
 custom_opencpn.deb
 build_release/
-**/logs/**
+
+*.log

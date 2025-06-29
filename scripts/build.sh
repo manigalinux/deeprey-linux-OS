@@ -89,6 +89,14 @@ cp -arp custom_opencpn.deb ${ROOTFS}/
 chroot ${ROOTFS} dpkg -i custom_opencpn.deb
 chroot ${ROOTFS} apt-get -y --fix-broken install
 
+LOG_INFO "Install onboard debs"
+echo "deb [trusted=yes] file:$ONBOARD_DEB_DIR/ ./" > ${ROOTFS}/etc/apt/sources.list.d/onboardlocalrepo.list
+chroot ${ROOTFS} apt-get update -o Dir::Etc::sourcelist="${ROOTFS}/etc/apt/sources.list.d/onboardlocalrepo.list"
+chroot ${ROOTFS} apt-get -y install onboard onboard-data onboard-common
+
+# Remove the temporary local repository configuration
+rm ${ROOTFS}/etc/apt/sources.list.d/onboardlocalrepo.list
+
 ## install original
 ## chroot ${ROOTFS} apt-get install -y opencpn
 

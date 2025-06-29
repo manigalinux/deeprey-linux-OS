@@ -10,3 +10,6 @@ RUN apt-get -y install debootstrap fdisk parted syslinux dosfstools uuid-runtime
 
 # install usefull packages
 RUN apt-get -y install nano
+
+# Set Environment Variables
+ENV ONBOARD_DEB_DIR /onboard/debs

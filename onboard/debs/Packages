@@ -1,0 +1,110 @@
+Package: gnome-shell-extension-onboard
+Source: onboard
+Version: 1.4.3-6
+Architecture: all
+Maintainer: Uwe Niethammer <uwe@dr-niethammer.de>
+Installed-Size: 73
+Depends: gnome-shell (>= 3.16), onboard (>= 1.4.3-6)
+Breaks: onboard-common (<< 1.3.0)
+Replaces: onboard-common (<< 1.3.0)
+Filename: ./gnome-shell-extension-onboard_1.4.3-6_all.deb
+Size: 28580
+MD5sum: 8271725dca72da75b4e15e2d9a920e87
+SHA1: 544723891e1abc2c515206e9e6432884982654c1
+SHA256: 75d837b3c7ae799b20a40c891f56d2b689f6c661e0f2aa43f0a5ac149978279a
+Section: gnome
+Priority: optional
+Homepage: https://github.com/dr-ni/onboard
+Description: GNOME Shell extension for the on-screen keyboard Onboard
+ This package hides the official GNOME3 keyboard and provides an icon to
+ show/hide Onboard. It is only an initial extension that does not show
+ Onboard for activities and passwords, yet.
+
+Package: onboard
+Version: 1.4.3-6
+Architecture: amd64
+Maintainer: Uwe Niethammer <uwe@dr-niethammer.de>
+Installed-Size: 2149
+Depends: gir1.2-gdkpixbuf-2.0, gir1.2-glib-2.0, gir1.2-gtk-3.0, gir1.2-pango-1.0 (>= 1.29.3), iso-codes, librsvg2-common, onboard-common (<< 1.4.3-6.1), onboard-common (>= 1.4.3-6), python3-cairo, python3-dbus, python3-gi-cairo, dconf-gsettings-backend | gsettings-backend, python3 (<< 3.12), python3 (>= 3.11~), python3:any, libc6 (>= 2.29), libcairo2 (>= 1.10.0), libcanberra0 (>= 0.2), libdconf1 (>= 0.14.0), libgcc-s1 (>= 3.0), libglib2.0-0 (>= 2.31.8), libgtk-3-0 (>= 3.9.10), libhunspell-1.7-0, libstdc++6 (>= 11), libudev1 (>= 183), libx11-6, libxi6 (>= 2:1.2.99.4), libxkbfile1 (>= 1:1.1.0), libxtst6
+Recommends: gir1.2-ayatanaappindicator3-0.1, gir1.2-atspi-2.0, acpid, onboard-data (>= 1.4.3-6), xdg-utils
+Suggests: mousetweaks (>= 3.3.90)
+Filename: ./onboard_1.4.3-6_amd64.deb
+Size: 402264
+MD5sum: 37372c9eabea54264605b7b4e6257071
+SHA1: a9bc719ebc3c742c3422d12a19abc2452793b4bc
+SHA256: 545636ec7ecee9c9292658f4d46cd0b125480a088d2aaa08095bce46f9173109
+Section: gnome
+Priority: optional
+Homepage: https://github.com/dr-ni/onboard
+Description: Simple On-screen Keyboard
+ On-screen Keyboard with macros, easy layout creation and word suggestion.
+ .
+ This on-screen keyboard can be useful for tablet PC users, as well as
+ for mobility impaired users.
+
+Package: onboard-common
+Source: onboard
+Version: 1.4.3-6
+Architecture: all
+Maintainer: Uwe Niethammer <uwe@dr-niethammer.de>
+Installed-Size: 3401
+Depends: python3
+Breaks: onboard (<< 1.3.0-1~)
+Replaces: onboard (<< 1.3.0-1~)
+Filename: ./onboard-common_1.4.3-6_all.deb
+Size: 559276
+MD5sum: 57be2372983e9d702b28013561de359a
+SHA1: 4b44b16e5014f343e39210672a5f262be96b0111
+SHA256: 781d7e86ba5594bc49c86a67a81a3c5913d272eadd6c175a7e9249c26754d530
+Section: gnome
+Priority: optional
+Homepage: https://github.com/dr-ni/onboard
+Description: Simple On-screen Keyboard (common files)
+ On-screen Keyboard with macros, easy layout creation and word suggestion.
+ .
+ This package ships the architecture independent files of the onboard
+ on-screen keyboard.
+
+Package: onboard-data
+Source: onboard
+Version: 1.4.3-6
+Architecture: all
+Maintainer: Uwe Niethammer <uwe@dr-niethammer.de>
+Installed-Size: 25516
+Depends: onboard (<< 1.4.3-6.1), onboard (>= 1.4.3-6)
+Breaks: onboard-prediction-data (<< 0.99.0~alpha1~tr1531)
+Replaces: onboard-prediction-data (<< 0.99.0~alpha1~tr1531)
+Filename: ./onboard-data_1.4.3-6_all.deb
+Size: 4810764
+MD5sum: 6ea70077b2c32fe8036ba172bd650fbe
+SHA1: 3d7007795aab73cb3cd3b9fea5b56c97d33cd887
+SHA256: 7e755912018276c8a5cca813d69edeaafe5c7def1737c48ecbc13cd28b82d11f
+Section: gnome
+Priority: optional
+Homepage: https://github.com/dr-ni/onboard
+Description: Language model files for the word suggestion feature of Onboard
+ On-screen Keyboard with macros, easy layout creation and word suggestion.
+ .
+ This package installs default language model files for various languages.
+ The word suggestion feature of Onboard uses these files (and if available
+ also custom user language model files) to compute the word completion
+ suggestions and the word prediction suggestions.
+
+Package: onboard-dbgsym
+Source: onboard
+Version: 1.4.3-6
+Auto-Built-Package: debug-symbols
+Architecture: amd64
+Maintainer: Uwe Niethammer <uwe@dr-niethammer.de>
+Installed-Size: 1219
+Depends: onboard (= 1.4.3-6)
+Filename: ./onboard-dbgsym_1.4.3-6_amd64.deb
+Size: 1151128
+MD5sum: 7985beefa3fb2c272b7018308b1d88a7
+SHA1: 42e991aa8591dbb71687116b17143887951f243e
+SHA256: 8058157b7468850b0b647511c4599f24c4dfccc0b69cac51c17b0d3b9c6d2d0d
+Section: debug
+Priority: optional
+Description: debug symbols for onboard
+Build-Ids: 1b7391b042d3fafe698c4aca207a93e8e1833189 ddfd58749f8de6f6553dffca51ffe456bf55b1b3
+

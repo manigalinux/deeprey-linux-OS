@@ -47,6 +47,13 @@ DEBIAN_PKG_SRC_FOLDER=$DEBIAN_PKG_DIR/deeprey_pkg
 
 LOG_DIR="$DEBIAN_PKG_DIR/logs"
 # Ensure the log directory exists
+# removing old log directory if it exists
+if [ -d "$LOG_DIR" ]; then
+    echo "Removing old log directory..."
+    rm -rf "$LOG_DIR"
+fi
+# Create a new log directory
+echo "Creating log directory at $LOG_DIR..."
 mkdir -p "$LOG_DIR"
 
 echo "# ============================================================ #"
@@ -83,7 +90,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 echo "Configuring OpenCPN build..."
-cmake --build $OPENCPN_BUILD_DIR --config Release >> "$LOG_DIR/opencpn_build.log" 2>&1
+cmake --build $OPENCPN_BUILD_DIR --config Release -- -j8 >> "$LOG_DIR/opencpn_build.log" 2>&1
 if [ $? -ne 0 ]; then
     echo "❌ OpenCPN build failed"
     exit 1
@@ -128,7 +135,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 echo "Configuring DeepreyGui build..."
-cmake --build $DEEPREY_GUI_BUILD_DIR --config Release >> "$LOG_DIR/deeprey_gui_build.log" 2>&1
+cmake --build $DEEPREY_GUI_BUILD_DIR --config Release -- -j8 >> "$LOG_DIR/deeprey_gui_build.log" 2>&1
 if [ $? -ne 0 ]; then
     echo "❌ DeepreyGui build failed"
     exit 1
@@ -137,7 +144,7 @@ echo "✅ DeepreyGui build successful"
 # Install OpenCPN
 echo "Installing DeepreyGui..."
 cd $DEEPREY_GUI_BUILD_DIR
-make -j$(nproc) >> "$LOG_DIR/deeprey_gui_build.log" 2>&1
+make >> "$LOG_DIR/deeprey_gui_build.log" 2>&1
 if [ $? -ne 0 ]; then
     echo "❌ DeepreyGui installation failed"
     exit 1
@@ -173,7 +180,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 echo "Configuring DeepreyRadar build..."
-cmake --build $DEEPREY_RADAR_BUILD_DIR --config Release >> "$LOG_DIR/deeprey_radar_build.log" 2>&1
+cmake --build $DEEPREY_RADAR_BUILD_DIR --config Release -- -j8 >> "$LOG_DIR/deeprey_radar_build.log" 2>&1
 if [ $? -ne 0 ]; then
     echo "❌ DeepreyRadar build failed"
     exit 1
@@ -182,7 +189,7 @@ echo "✅ DeepreyRadar build successful"
 # Install OpenCPN
 echo "Installing DeepreyRadar..."
 cd $DEEPREY_RADAR_BUILD_DIR
-make -j$(nproc) >> "$LOG_DIR/deeprey_radar_build.log" 2>&1
+make >> "$LOG_DIR/deeprey_radar_build.log" 2>&1
 if [ $? -ne 0 ]; then
     echo "❌ DeepreyRadar installation failed"
     exit 1
