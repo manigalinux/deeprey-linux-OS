@@ -25,6 +25,7 @@ ENV DEEPREY_RADAR_DIR /deeprey-radar
 ENV DEEPREY_LINUX_OS_DIR /deeprey-linux-os
 ENV OPENCPN_DIR /OpenCPN
 ENV DEBIAN_PKG_DIR $DEEPREY_LINUX_OS_DIR/debian_pkg
+ENV ONBOARD_DEB_DIR $DEEPREY_LINUX_OS_DIR/onboard
 
 # Configuring git safe directories
 RUN git config --global --add safe.directory $DEEPREY_GUI_DIR

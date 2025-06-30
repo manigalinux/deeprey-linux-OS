@@ -1,0 +1,54 @@
+Format: 1.8
+Date: Fri, 13 Jun 2025 01:24:31 +0200
+Source: onboard
+Binary: gnome-shell-extension-onboard onboard onboard-common onboard-data onboard-dbgsym
+Architecture: source all amd64
+Version: 1.4.3-6
+Distribution: UNRELEASED
+Urgency: medium
+Maintainer: Uwe Niethammer <uwe@dr-niethammer.de>
+Changed-By: Uwe Niethammer <uwe@dr-niethammer.de>
+Description:
+ gnome-shell-extension-onboard - GNOME Shell extension for the on-screen keyboard Onboard
+ onboard    - Simple On-screen Keyboard
+ onboard-common - Simple On-screen Keyboard (common files)
+ onboard-data - Language model files for the word suggestion feature of Onboard
+Changes:
+ onboard (1.4.3-6) UNRELEASED; urgency=medium
+ .
+   [ Lukas Gottschall ]
+   * Remove env GDK_BACKEND=x11 in case of wayland
+   * Add dist_choice/revision to setup.py/Readme.md and use current version from changelog to build debs
+   * Fix setup.py version update
+ .
+   [ dr-ni ]
+   * Force consistant versioning pip -> dpkg
+   * prevent package not found error
+   * CleanUp
+Checksums-Sha1:
+ d0d881856821fa2b17ba3ad1c51e02fad1ad7b02 1368 onboard_1.4.3-6.dsc
+ e34fe4d67cca8c3a35e92bf1e4dcec769c18b109 26468 onboard_1.4.3-6.debian.tar.xz
+ 544723891e1abc2c515206e9e6432884982654c1 28580 gnome-shell-extension-onboard_1.4.3-6_all.deb
+ 4b44b16e5014f343e39210672a5f262be96b0111 559276 onboard-common_1.4.3-6_all.deb
+ 3d7007795aab73cb3cd3b9fea5b56c97d33cd887 4810764 onboard-data_1.4.3-6_all.deb
+ 42e991aa8591dbb71687116b17143887951f243e 1151128 onboard-dbgsym_1.4.3-6_amd64.deb
+ a86bdb398a9cf86b3ce40a7f1f51f34a52e03720 16573 onboard_1.4.3-6_amd64.buildinfo
+ a9bc719ebc3c742c3422d12a19abc2452793b4bc 402264 onboard_1.4.3-6_amd64.deb
+Checksums-Sha256:
+ 2fca1369cdd8bd6a07ed0608cd2a781b0852edc814689c0ad6cefaedb90f1223 1368 onboard_1.4.3-6.dsc
+ a11af4b04f39b55c130d920ae04255f3d877824a9bad60f23cf7680e367f52e3 26468 onboard_1.4.3-6.debian.tar.xz
+ 75d837b3c7ae799b20a40c891f56d2b689f6c661e0f2aa43f0a5ac149978279a 28580 gnome-shell-extension-onboard_1.4.3-6_all.deb
+ 781d7e86ba5594bc49c86a67a81a3c5913d272eadd6c175a7e9249c26754d530 559276 onboard-common_1.4.3-6_all.deb
+ 7e755912018276c8a5cca813d69edeaafe5c7def1737c48ecbc13cd28b82d11f 4810764 onboard-data_1.4.3-6_all.deb
+ 8058157b7468850b0b647511c4599f24c4dfccc0b69cac51c17b0d3b9c6d2d0d 1151128 onboard-dbgsym_1.4.3-6_amd64.deb
+ 44a29f883f5cf7d7fb8ed2f81d2ed946a5823030a9badf6ab5dfc19878c3f3e1 16573 onboard_1.4.3-6_amd64.buildinfo
+ 545636ec7ecee9c9292658f4d46cd0b125480a088d2aaa08095bce46f9173109 402264 onboard_1.4.3-6_amd64.deb
+Files:
+ 634944bc290b2904ab5fdeefede78365 1368 gnome optional onboard_1.4.3-6.dsc
+ 41ce73e8b185637822ef4467ce15c784 26468 gnome optional onboard_1.4.3-6.debian.tar.xz
+ 8271725dca72da75b4e15e2d9a920e87 28580 gnome optional gnome-shell-extension-onboard_1.4.3-6_all.deb
+ 57be2372983e9d702b28013561de359a 559276 gnome optional onboard-common_1.4.3-6_all.deb
+ 6ea70077b2c32fe8036ba172bd650fbe 4810764 gnome optional onboard-data_1.4.3-6_all.deb
+ 7985beefa3fb2c272b7018308b1d88a7 1151128 debug optional onboard-dbgsym_1.4.3-6_amd64.deb
+ 395164dc5462188c4fffa1b565479196 16573 gnome optional onboard_1.4.3-6_amd64.buildinfo
+ 37372c9eabea54264605b7b4e6257071 402264 gnome optional onboard_1.4.3-6_amd64.deb

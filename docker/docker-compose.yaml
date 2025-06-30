@@ -12,6 +12,7 @@ services:
     volumes:
       - ../build/:/build
       - ../scripts:/scripts
+      - ../onboard:/onboard
   deeprey-dev-os:
     hostname: deeprey-dev-os
     container_name: deeprey-dev-os
@@ -27,6 +28,7 @@ services:
       - ../../deeprey-radar:/deeprey-radar
       - ./..:/deeprey-linux-os
       - ../../OpenCPN:/OpenCPN
+      - ../../onboard:/onboard
       - /tmp/.X11-unix:/tmp/.X11-unix
       - /etc/machine-id:/etc/machine-id:ro
     environment:
