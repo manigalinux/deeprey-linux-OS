@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<plugin version="1">
+    <name>Deeprey-Sonar</name>
+    <version>0.0.0.0+2507071555.1d55445</version>
+    <release>0</release>
+    <summary>Deeprey Sonar PlugIn</summary>
+    <api-version>1.19</api-version>
+    <open-source>false</open-source>
+    <is-imported>true</is-imported>
+    <author>BS</author>
+    <source>BS</source>
+    <info-url>https://opencpn.org/OpenCPN/plugins/</info-url>
+    <description>"Deeprey Sonar PlugIn.</description>
+    <target>ubuntu-x86_64</target>
+    <target-version>24.04</target-version>
+    <target-arch>x86_64</target-arch>
+    <tarball-url>https://dl.cloudsmith.io/public/opencpn/deeprey-alpha/raw/names/Deeprey-Sonar-0.0-ubuntu-x86_64-24.04-tarball/versions/0.0.0.0+2507071555.1d55445/Deeprey-Sonar-0.0.0.0+2507071555.1d55445_ubuntu-x86_64-24.04-x86_64.tar.gz</tarball-url>
+    <tarball-checksum></tarball-checksum>
+</plugin>

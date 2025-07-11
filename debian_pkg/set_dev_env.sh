@@ -11,4 +11,12 @@ echo "Installing DeepreyRadar build dependencies..."
 cd $DEEPREY_RADAR_DIR
 mk-build-deps -ir build-deps/control
 
+echo "Installing DeepreySonar build dependencies..."
+cd $DEEPREY_SONAR_DIR
+mk-build-deps -ir build-deps/control
+
+echo "Installing DeepreyNavbar build dependencies..."
+cd $DEEPREY_NAVBAR_DIR
+mk-build-deps -ir build-deps/control
+
 cd $DEBIAN_PKG_DIR

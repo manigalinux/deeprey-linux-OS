@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <plugin version="1">
     <name>[Deeprey;Gui]</name>
-    <version>0.0.0.0+2506011905.e828965</version>
+    <version>0.0.0.0+2507082010.30e1bf8</version>
     <release>0</release>
     <summary>Deeprey plugin</summary>
     <api-version>1.20</api-version>
@@ -14,6 +14,6 @@
     <target>ubuntu-x86_64</target>
     <target-version>24.04</target-version>
     <target-arch>x86_64</target-arch>
-    <tarball-url>https://dl.cloudsmith.io/public/opencpn/deeprey-alpha/raw/names/[Deeprey;Gui]-0.0-ubuntu-x86_64-24.04-tarball/versions/0.0.0.0+2506011905.e828965/[Deeprey;Gui]-0.0.0.0+2506011905.e828965_ubuntu-x86_64-24.04-x86_64.tar.gz</tarball-url>
+    <tarball-url>https://dl.cloudsmith.io/public/opencpn/deeprey-alpha/raw/names/[Deeprey;Gui]-0.0-ubuntu-x86_64-24.04-tarball/versions/0.0.0.0+2507082010.30e1bf8/[Deeprey;Gui]-0.0.0.0+2507082010.30e1bf8_ubuntu-x86_64-24.04-x86_64.tar.gz</tarball-url>
     <tarball-checksum></tarball-checksum>
 </plugin>

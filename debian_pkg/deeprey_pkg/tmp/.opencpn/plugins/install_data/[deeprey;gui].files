@@ -18,9 +18,11 @@
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/deeprey_panel_icon1.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/arrow.svg
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/night.svg
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/Font Awesome 6 Pro-Light-300.otf
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/radar_navico_4g_b.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/inactiveLightMode.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/radar_garmin_xhd.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/Font Awesome 6 Pro-Solid-900.otf
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/9.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/course.svg
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/radar_navico_4g_a.png
@@ -29,6 +31,8 @@
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/13.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/x.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/11.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/Font Awesome 6 Pro-Regular-400.otf
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/Font Awesome 6 Free-Solid-900.otf
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/radar_navico_br24.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/instrumentButton.svg
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/ais.svg
@@ -43,6 +47,15 @@
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/1.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/16.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/15.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/palette_traditional_white.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/palette_blue_imaging.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/palette_classic_white.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/palette_black.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/palette_traditional_blue.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/palette_yellow.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/palette_amber_ridge.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/sonar/palette_classic_blue.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/center_on.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/moinsNumber.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/MenuButtonPoints.svg
@@ -51,6 +64,7 @@
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/radar_garmin_hd.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/12.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/fullScreen.svg
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/Font Awesome 6 Free-Regular-400.otf
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/background_image.jpg
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/navBarDemo.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/toolsBar.png
@@ -79,6 +93,7 @@
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/radar_demo.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/radar_navico_halo_b.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/2.png
+/root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/Font Awesome 6 Pro-Thin-100.otf
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/plusNumber.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/delete.png
 /root/.local/share/opencpn/plugins/DeepreyGui_pi/data/resources/0.png
@@ -149,6 +164,9 @@
 /root/.local/share/locale/el_GR/
 /root/.local/share/locale/el_GR/LC_MESSAGES/
 /root/.local/share/locale/el_GR/LC_MESSAGES/opencpn-DeepreyGui_pi.mo
+/root/.local/share/locale/he_IL/
+/root/.local/share/locale/he_IL/LC_MESSAGES/
+/root/.local/share/locale/he_IL/LC_MESSAGES/opencpn-DeepreyGui_pi.mo
 /root/.local/share/locale/fi_FI/
 /root/.local/share/locale/fi_FI/LC_MESSAGES/
 /root/.local/share/locale/fi_FI/LC_MESSAGES/opencpn-DeepreyGui_pi.mo

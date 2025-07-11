@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <plugin version="1">
     <name>Deepray-Radar</name>
-    <version>0.1.0+2506131215.</version>
+    <version>0.1.0+2507071558.b71dec4</version>
     <release>0</release>
     <summary>Overlays the radar picture on OpenCPN</summary>
     <api-version>1.19</api-version>
@@ -20,9 +20,9 @@ When a compass heading is provided it will allow radar overlay on the chart(s).
 It also allows separate display of a traditional radar picture (PPI).
 
 Supports (M)ARPA, Guard zones, AIS overlay on PPI, etc.</description>
-    <target>debian-x86_64</target>
-    <target-version>12</target-version>
+    <target>ubuntu-x86_64</target>
+    <target-version>24.04</target-version>
     <target-arch>x86_64</target-arch>
-    <tarball-url>https://dl.cloudsmith.io/public/deeprey-radar-pi/radar-unstable/raw/names/Deepray-Radar-0.1-debian-12-tarball/versions/0.1.0+2506131215./Deepray-Radar-0.1.0+2506131215._debian-12-x86_64.tar.gz</tarball-url>
+    <tarball-url>https://dl.cloudsmith.io/public/deeprey-radar-pi/radar-unstable/raw/names/Deepray-Radar-0.1-ubuntu-24.04-tarball/versions/0.1.0+2507071558.b71dec4/Deepray-Radar-0.1.0+2507071558.b71dec4_ubuntu-24.04-x86_64.tar.gz</tarball-url>
     <tarball-checksum></tarball-checksum>
 </plugin>

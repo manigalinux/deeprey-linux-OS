@@ -22,14 +22,19 @@ RUN apt-get install -y --no-install-recommends software-properties-common
 # set environment variables
 ENV DEEPREY_GUI_DIR /deeprey-gui
 ENV DEEPREY_RADAR_DIR /deeprey-radar
+ENV DEEPREY_SONAR_DIR /deeprey-sonar
+ENV DEEPREY_NAVBAR_DIR /deeprey-navbar
 ENV DEEPREY_LINUX_OS_DIR /deeprey-linux-os
 ENV OPENCPN_DIR /OpenCPN
 ENV DEBIAN_PKG_DIR $DEEPREY_LINUX_OS_DIR/debian_pkg
+ENV IMAGE_SCRIPT_DIR $DEEPREY_LINUX_OS_DIR/scripts
 ENV ONBOARD_DEB_DIR $DEEPREY_LINUX_OS_DIR/onboard
 
 # Configuring git safe directories
 RUN git config --global --add safe.directory $DEEPREY_GUI_DIR
 RUN git config --global --add safe.directory $DEEPREY_RADAR_DIR
+RUN git config --global --add safe.directory $DEEPREY_SONAR_DIR
+RUN git config --global --add safe.directory $DEEPREY_NAVBAR_DIR
 RUN git config --global --add safe.directory $DEEPREY_LINUX_OS_DIR
 RUN git config --global --add safe.directory $OPENCPN_DIR
 

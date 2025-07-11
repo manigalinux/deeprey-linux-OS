@@ -1,0 +1,4 @@
+share: /root/.local/share
+lib64: /root/.local/lib
+lib: /root/.local/lib
+bin: /root/.local/bin

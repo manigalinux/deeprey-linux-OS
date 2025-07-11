@@ -26,6 +26,8 @@ services:
     volumes:
       - ../../deeprey-gui:/deeprey-gui
       - ../../deeprey-radar:/deeprey-radar
+      - ../../deeprey-sonar:/deeprey-sonar
+      - ../../deeprey-navbar:/deeprey-navbar
       - ./..:/deeprey-linux-os
       - ../../OpenCPN:/OpenCPN
       - ../../onboard:/onboard

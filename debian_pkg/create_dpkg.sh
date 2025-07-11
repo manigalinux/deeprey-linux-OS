@@ -30,6 +30,16 @@ if [ ! -d "$DEEPREY_RADAR_DIR" ]; then
     exit 1
 fi
 
+if [ ! -d "$DEEPREY_SONAR_DIR" ]; then
+    echo "DeepreySonar source directory not found at $DEEPREY_SONAR_DIR."
+    exit 1
+fi
+
+if [ ! -d "$DEEPREY_NAVBAR_DIR" ]; then
+    echo "DeepreyNavbar source directory not found at $DEEPREY_NAVBAR_DIR."
+    exit 1
+fi
+
 if [ ! -d "$DEBIAN_PKG_DIR" ]; then
     echo "debian_pkg directory not found at $DEBIAN_PKG_DIR."
     exit 1
@@ -38,10 +48,14 @@ fi
 echo "DEBIAN Directory: $DEBIAN_PKG_DIR"
 echo "DeepreyGui Directory: $DEEPREY_GUI_DIR"
 echo "DeepreyRadar Directory: $DEEPREY_RADAR_DIR"
+echo "DeepreySonar Directory: $DEEPREY_SONAR_DIR"
+echo "DeepreyNavbar Directory: $DEEPREY_NAVBAR_DIR"
 echo "OpenCPN Directory: $OPENCPN_DIR"
 
 DEEPREY_GUI_BUILD_DIR="$DEEPREY_GUI_DIR/build_release"
 DEEPREY_RADAR_BUILD_DIR="$DEEPREY_RADAR_DIR/build_release"
+DEEPREY_SONAR_BUILD_DIR="$DEEPREY_SONAR_DIR/build_release"
+DEEPREY_NAVBAR_BUILD_DIR="$DEEPREY_NAVBAR_DIR/build_release"
 OPENCPN_BUILD_DIR="$OPENCPN_DIR/build_release"
 DEBIAN_PKG_SRC_FOLDER=$DEBIAN_PKG_DIR/deeprey_pkg
 
@@ -197,6 +211,96 @@ fi
 
 echo "# ============================================================ #"
 
+# Building DeepreySonar plugin
+echo "Building DeepreySonar plugin..."
+cd $DEEPREY_SONAR_DIR
+
+if [ ! -d $DEEPREY_SONAR_BUILD_DIR ]; then
+    mkdir -p $DEEPREY_SONAR_BUILD_DIR
+else
+    # Checks whether the user want a fresh build or not, or if -y option is passed
+    if [[ "$1" == "-y" ]]; then
+        echo "Removing old DeepreySONAR build directory..."
+        rm -rf $DEEPREY_SONAR_BUILD_DIR
+    else
+        if [[ "$1" != "-n" ]]; then
+            read -p "Do you want to remove the old DeepreySonar build directory? (y/N): " confirm
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo "Removing old DeepreySonar build directory..."
+                rm -rf $DEEPREY_SONAR_BUILD_DIR
+            fi
+        fi
+    fi
+fi
+
+cmake -B $DEEPREY_SONAR_BUILD_DIR -DCMAKE_BUILD_TYPE=Release > "$LOG_DIR/deeprey_sonar_build.log" 2>&1
+if [ $? -ne 0 ]; then
+    echo "❌ CMake configuration failed"
+    exit 1
+fi
+echo "Configuring DeepreySonar build..."
+cmake --build $DEEPREY_SONAR_BUILD_DIR --config Release -- -j8 >> "$LOG_DIR/deeprey_sonar_build.log" 2>&1
+if [ $? -ne 0 ]; then
+    echo "❌ DeepreySonar build failed"
+    exit 1
+fi
+echo "✅ DeepreySonar build successful"
+# Install OpenCPN
+echo "Installing DeepreySonar..."
+cd $DEEPREY_SONAR_BUILD_DIR
+make >> "$LOG_DIR/deeprey_sonar_build.log" 2>&1
+if [ $? -ne 0 ]; then
+    echo "❌ DeepreySonar installation failed"
+    exit 1
+fi
+
+echo "# ============================================================ #"
+
+# Building DeepreyNavbar plugin
+echo "Building DeepreyNavbar plugin..."
+cd $DEEPREY_NAVBAR_DIR
+
+if [ ! -d $DEEPREY_NAVBAR_BUILD_DIR ]; then
+    mkdir -p $DEEPREY_NAVBAR_BUILD_DIR
+else
+    # Checks whether the user want a fresh build or not, or if -y option is passed
+    if [[ "$1" == "-y" ]]; then
+        echo "Removing old DeepreyNavbar build directory..."
+        rm -rf $DEEPREY_NAVBAR_BUILD_DIR
+    else
+        if [[ "$1" != "-n" ]]; then
+            read -p "Do you want to remove the old DeepreyNavbar build directory? (y/N): " confirm
+            if [[ "$confirm" =~ ^[Yy]$ ]]; then
+                echo "Removing old DeepreyNavbar build directory..."
+                rm -rf $DEEPREY_NAVBAR_BUILD_DIR
+            fi
+        fi
+    fi
+fi
+
+cmake -B $DEEPREY_NAVBAR_BUILD_DIR -DCMAKE_BUILD_TYPE=Release > "$LOG_DIR/deeprey_navbar_build.log" 2>&1
+if [ $? -ne 0 ]; then
+    echo "❌ CMake configuration failed"
+    exit 1
+fi
+echo "Configuring DeepreyNavbar build..."
+cmake --build $DEEPREY_NAVBAR_BUILD_DIR --config Release -- -j8 >> "$LOG_DIR/deeprey_navbar_build.log" 2>&1
+if [ $? -ne 0 ]; then
+    echo "❌ DeepreyNavbar build failed"
+    exit 1
+fi
+echo "✅ DeepreyNavbar build successful"
+# Install OpenCPN
+echo "Installing DeepreyNavbar..."
+cd $DEEPREY_NAVBAR_BUILD_DIR
+make >> "$LOG_DIR/deeprey_navbar_build.log" 2>&1
+if [ $? -ne 0 ]; then
+    echo "❌ DeepreyNavbar installation failed"
+    exit 1
+fi
+
+echo "# ============================================================ #"
+
 # Removing old package directory if it exists
 rm -rf $DEBIAN_PKG_SRC_FOLDER/usr
 
@@ -286,6 +390,42 @@ done
 mkdir -p $DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/opencpn/plugins/deeprey-radar_pi
 cp -r $DEEPREY_RADAR_DIR/data $DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/opencpn/plugins/deeprey-radar_pi
 
+# Adding DeepreySonar plugin files
+cp $DEEPREY_SONAR_BUILD_DIR/libdeeprey-sonar_pi.so $DEBIAN_PKG_SRC_FOLDER/tmp/.local/lib/opencpn
+
+# Copying DeepreySonar locale files
+mkdir -p $DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/locale
+for mo_file in $DEEPREY_SONAR_BUILD_DIR/*.mo; do
+    locale_name=$(basename "$mo_file" .mo)
+    target_dir="$DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/locale/${locale_name}/LC_MESSAGES"
+    if [ ! -d "$target_dir" ]; then
+        mkdir -p "$target_dir"
+    fi
+    cp -f "$mo_file" "$target_dir/opencpn-deeprey-sonar_pi.mo"
+done
+
+# Copying DeepreySonar plugin files
+mkdir -p $DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/opencpn/plugins/deeprey-sonar_pi
+cp -r $DEEPREY_SONAR_DIR/data $DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/opencpn/plugins/deeprey-sonar_pi
+
+# Adding DeepreyNavbar plugin files
+cp $DEEPREY_NAVBAR_BUILD_DIR/libDeepreyNavBar_pi.so $DEBIAN_PKG_SRC_FOLDER/tmp/.local/lib/opencpn
+
+# Copying DeepreyNavbar locale files
+mkdir -p $DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/locale
+for mo_file in $DEEPREY_NAVBAR_BUILD_DIR/*.mo; do
+    locale_name=$(basename "$mo_file" .mo)
+    target_dir="$DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/locale/${locale_name}/LC_MESSAGES"
+    if [ ! -d "$target_dir" ]; then
+        mkdir -p "$target_dir"
+    fi
+    cp -f "$mo_file" "$target_dir/opencpn-DeepreyNavBar_pi.mo"
+done
+
+# Copying DeepreyNavbar plugin files
+mkdir -p $DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/opencpn/plugins/DeepreyNavBar_pi
+cp -r $DEEPREY_NAVBAR_DIR/data $DEBIAN_PKG_SRC_FOLDER/tmp/.local/share/opencpn/plugins/DeepreyNavBar_pi
+
 
 cd $DEBIAN_PKG_DIR
 
@@ -314,15 +454,18 @@ else
     exit 1
 fi
 
-mv $DEBIAN_PKG_SRC_FOLDER.deb "$PACKAGE_NAME"
+mv $DEBIAN_PKG_SRC_FOLDER.deb "$IMAGE_SCRIPT_DIR/$PACKAGE_NAME"
+cd $IMAGE_SCRIPT_DIR
 chmod 777 "$PACKAGE_NAME" # Set permissions for the package
 echo "Package created: $PACKAGE_NAME"
 rm -rf custom_opencpn.deb
-ln -s $DEBIAN_PKG_SRC_FOLDER custom_opencpn.deb
+ln -s $PACKAGE_NAME custom_opencpn.deb
 
 # Clean up OpenCPN default files before installing the plugin
+cd $DEBIAN_PKG_DIR
 ./clean_opencpn.sh $1
 
+cd $IMAGE_SCRIPT_DIR
 # Install the plugin
 dpkg -i "$PACKAGE_NAME" > "$LOG_DIR/dpkg_install.log" 2>&1
 if [ $? -eq 0 ]; then
@@ -340,3 +483,5 @@ if [ $? -eq 0 ]; then
 else
     echo "❌ OpenCPN failed to start"
 fi
+
+cd $DEBIAN_PKG_DIR
