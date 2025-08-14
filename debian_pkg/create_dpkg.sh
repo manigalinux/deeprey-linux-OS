@@ -212,39 +212,39 @@ fi
 echo "# ============================================================ #"
 
 # Building DeepreySonar plugin
-echo "Building DeepreySonar plugin..."
-cd $DEEPREY_SONAR_DIR
+# echo "Building DeepreySonar plugin..."
+# cd $DEEPREY_SONAR_DIR
 
-if [ ! -d $DEEPREY_SONAR_BUILD_DIR ]; then
-    mkdir -p $DEEPREY_SONAR_BUILD_DIR
-else
-    # Checks whether the user want a fresh build or not, or if -y option is passed
-    if [[ "$1" == "-y" ]]; then
-        echo "Removing old DeepreySONAR build directory..."
-        rm -rf $DEEPREY_SONAR_BUILD_DIR
-    else
-        if [[ "$1" != "-n" ]]; then
-            read -p "Do you want to remove the old DeepreySonar build directory? (y/N): " confirm
-            if [[ "$confirm" =~ ^[Yy]$ ]]; then
-                echo "Removing old DeepreySonar build directory..."
-                rm -rf $DEEPREY_SONAR_BUILD_DIR
-            fi
-        fi
-    fi
-fi
+# if [ ! -d $DEEPREY_SONAR_BUILD_DIR ]; then
+#     mkdir -p $DEEPREY_SONAR_BUILD_DIR
+# else
+#     # Checks whether the user want a fresh build or not, or if -y option is passed
+#     if [[ "$1" == "-y" ]]; then
+#         echo "Removing old DeepreySONAR build directory..."
+#         rm -rf $DEEPREY_SONAR_BUILD_DIR
+#     else
+#         if [[ "$1" != "-n" ]]; then
+#             read -p "Do you want to remove the old DeepreySonar build directory? (y/N): " confirm
+#             if [[ "$confirm" =~ ^[Yy]$ ]]; then
+#                 echo "Removing old DeepreySonar build directory..."
+#                 rm -rf $DEEPREY_SONAR_BUILD_DIR
+#             fi
+#         fi
+#     fi
+# fi
 
-cmake -B $DEEPREY_SONAR_BUILD_DIR -DCMAKE_BUILD_TYPE=Release > "$LOG_DIR/deeprey_sonar_build.log" 2>&1
-if [ $? -ne 0 ]; then
-    echo "❌ CMake configuration failed"
-    exit 1
-fi
-echo "Configuring DeepreySonar build..."
-cmake --build $DEEPREY_SONAR_BUILD_DIR --config Release -- -j8 >> "$LOG_DIR/deeprey_sonar_build.log" 2>&1
-if [ $? -ne 0 ]; then
-    echo "❌ DeepreySonar build failed"
-    exit 1
-fi
-echo "✅ DeepreySonar build successful"
+# cmake -B $DEEPREY_SONAR_BUILD_DIR -DCMAKE_BUILD_TYPE=Release > "$LOG_DIR/deeprey_sonar_build.log" 2>&1
+# if [ $? -ne 0 ]; then
+#     echo "❌ CMake configuration failed"
+#     exit 1
+# fi
+# echo "Configuring DeepreySonar build..."
+# cmake --build $DEEPREY_SONAR_BUILD_DIR --config Release -- -j8 >> "$LOG_DIR/deeprey_sonar_build.log" 2>&1
+# if [ $? -ne 0 ]; then
+#     echo "❌ DeepreySonar build failed"
+#     exit 1
+# fi
+# echo "✅ DeepreySonar build successful"
 # Install OpenCPN
 echo "Installing DeepreySonar..."
 cd $DEEPREY_SONAR_BUILD_DIR
