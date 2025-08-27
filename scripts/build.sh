@@ -80,14 +80,16 @@ chroot ${ROOTFS} apt-get install -y openbox kbd # install openbox kbd
 chroot ${ROOTFS} apt-get install -y mesa-utils x11-apps # install mesa, xclock, xset
 chroot ${ROOTFS} apt-get install -y busybox iptables iptables-persistent # install busybox and iptables
 chroot ${ROOTFS} apt-get install -y acpid # acpid - catch power buttons pressed
+chroot ${ROOTFS} apt-get install -y systemd-timesyncd # install ntp sync
+chroot ${ROOTFS} apt-get install -y unattended-upgrades # unattended-upgrades - upgrades only from specific (deeprey) repos
 
 # install official opencpn
-LOG_INFO "Install opencpn"
-cp -arp Deeprey*.deb ${ROOTFS}/
-cp -arp custom_opencpn.deb ${ROOTFS}/
+#LOG_INFO "Install opencpn"
+#cp -arp Deeprey*.deb ${ROOTFS}/
+#cp -arp custom_opencpn.deb ${ROOTFS}/
 #chroot ${ROOTFS} apt-get install -y libglew2.2 libwxgtk-gl3.2-1 libarchive13 libcurl4 libglu1
-chroot ${ROOTFS} dpkg -i custom_opencpn.deb
-chroot ${ROOTFS} apt-get -y --fix-broken install
+#chroot ${ROOTFS} dpkg -i custom_opencpn.deb
+#chroot ${ROOTFS} apt-get -y --fix-broken install
 
 LOG_INFO "Install onboard debs"
 echo "deb [trusted=yes] file:$ONBOARD_DEB_DIR/ ./" > ${ROOTFS}/etc/apt/sources.list.d/onboardlocalrepo.list
@@ -128,7 +130,7 @@ chown -R 1000:1000 ${ROOTFS}/files/home/opencpn
 cp -arp ${ROOTFS}/tmp/.local ${ROOTFS}/files/home/opencpn/.local
 cp -arp ${ROOTFS}/tmp/.opencpn ${ROOTFS}/files/home/opencpn/.opencpn
 
-rm -rf ${ROOTFS}/tmp
+rm -rf ${ROOTFS}/tmp/*
 
 chown -R 1000:1000 ${ROOTFS}/files/home/opencpn/.local
 chown -R 1000:1000 ${ROOTFS}/files/home/opencpn/.opencpn
@@ -136,6 +138,33 @@ chown -R 1000:1000 ${ROOTFS}/files/home/opencpn/.opencpn
 chown -R 1001:1001 ${ROOTFS}/files/home/deepreyadmin
 cp -arp ${ROOTFS}/files/* ${ROOTFS}/
 rm -rf ${ROOTFS}/files
+
+# install opencpn
+LOG_INFO "Install opencpn"
+#cp -arp Deeprey*.deb ${ROOTFS}/
+#cp -arp custom_opencpn.deb ${ROOTFS}/
+#chroot ${ROOTFS} apt-get install -y libglew2.2 libwxgtk-gl3.2-1 libarchive13 libcurl4 libglu1
+#chroot ${ROOTFS} dpkg -i custom_opencpn.deb
+chroot ${ROOTFS} apt-get update
+chroot ${ROOTFS} apt-get install -y opencpn-deepreygui
+
+
+cp -ar files ${ROOTFS} 
+chown -R root:root ${ROOTFS}/files
+chown -R 1000:1000 ${ROOTFS}/files/home/opencpn
+
+cp -arp ${ROOTFS}/tmp/.local ${ROOTFS}/files/home/opencpn/.local
+cp -arp ${ROOTFS}/tmp/.opencpn ${ROOTFS}/files/home/opencpn/.opencpn
+
+rm -rf ${ROOTFS}/tmp/*
+
+chown -R 1000:1000 ${ROOTFS}/files/home/opencpn/.local
+chown -R 1000:1000 ${ROOTFS}/files/home/opencpn/.opencpn
+
+chown -R 1001:1001 ${ROOTFS}/files/home/deepreyadmin
+cp -arp ${ROOTFS}/files/* ${ROOTFS}/
+rm -rf ${ROOTFS}/files
+
 
 # unpack custom kernel/modules and so on (also change owner to root)
 LOG_INFO "Unpack custom kernel - ubuntu kernel 5.15.0-67-generic"

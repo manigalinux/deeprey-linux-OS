@@ -39,6 +39,14 @@ When image is running, the `opencpn` application will automatcally started. Defa
 
 For access you can also use SSH connection with `deepreyadmin` user and password from `scripts/config` file, but default port was changed from 22 to 2345. 
 
+## Repository
+Distribution include external repository configuration, together with signature. Distribution repository was added to `files/etc/apt/` folder. All configuration and repository build scripts and folder structure are in `repo/` folder.
+
+To add `.deb` packages into repository:
+ - copy your `.deb` files into `repo/deeprey/pool/main/` folder. 
+ - run: `./make-testing.sh` (for testing repo) or `./make-production.sh` (for production) inside `repo/`. With thoses comands there will be created Packages, Release and signed InRelease files.
+ - recursife copy `repo/deeprey/` folder to your server (apt.deeprey.com) (you can use `./sync-with-apt-server.sh`)
+
 ## Hacking
 ### Known HW/SW related issues
 
