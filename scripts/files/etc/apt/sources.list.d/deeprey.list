@@ -1,0 +1,2 @@
+deb file:/media/ ./
+deb https://apt.deeprey.com/ production main
