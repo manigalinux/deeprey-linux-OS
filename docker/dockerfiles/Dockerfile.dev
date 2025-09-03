@@ -19,6 +19,11 @@ RUN apt-get install -y --no-install-recommends devscripts equivs
 # install deeprey-gui dependencies
 RUN apt-get install -y --no-install-recommends software-properties-common
 
+# install python and systemd 
+RUN apt-get install -y python3 python3-pefile python3-zstandard python3-cryptography python3-lz4
+RUN apt-get install -y systemd systemd-boot systemd-boot-efi
+RUN apt-get install -y dracut
+
 # set environment variables
 ENV DEEPREY_GUI_DIR /deeprey-gui
 ENV DEEPREY_RADAR_DIR /deeprey-radar
